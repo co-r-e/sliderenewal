@@ -89,7 +89,7 @@ export default function HomePage({ dict }: { dict: any }) {
 
                 // 3. Consistency Instruction
                 if (previousGeneratedImage) {
-                    finalPrompt += `\n\nMaintain consistent style, colors, typography, and layout with the provided reference image (which is the previous page's design).`;
+                    finalPrompt += `\n\nMaintain consistent visual style, color scheme, and typography with the provided reference image (which is the previous page's design). IMPORTANT: Do NOT copy or reuse any text content from the previous page - only inherit the design tone and manner.`;
                 }
 
                 // Prepare reference images: Global + Page Specific + Previous Generated Image
