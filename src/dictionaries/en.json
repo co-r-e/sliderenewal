@@ -1,0 +1,61 @@
+{
+    "common": {
+        "upload_pdf": "Upload PDF",
+        "design_settings": "Design Settings",
+        "settings": "Settings",
+        "company_overview": "Company Overview",
+        "contact": "Contact",
+        "api_key": "API Key",
+        "save": "Save",
+        "saved": "Saved",
+        "saving": "Saving...",
+        "enter_api_key": "Enter your Gemini API Key",
+        "language": "Language",
+        "english": "English",
+        "japanese": "Japanese",
+        "prompt_placeholder": "e.g., Redesign this as a modern minimalist pitch deck...",
+        "rights_reserved": "© CORe, Inc. All rights reserved.",
+        "preview_customization": "Preview & Customization",
+        "generated_results": "Generated Results",
+        "pages": "pages",
+        "generated": "generated",
+        "download_all_zip": "Download All (ZIP)",
+        "download_png": "Download PNG",
+        "view_full_screen": "View Full Screen",
+        "drop_pdf": "Drop your PDF here",
+        "browse_pdf": "or click to browse (max 10MB)",
+        "upload_image": "Upload Image",
+        "upload_reference": "Upload Reference",
+        "design_instructions": "Design Instructions",
+        "reference_image": "Reference Image",
+        "aspect_ratio": "Aspect Ratio",
+        "generate_redesign": "Generate Redesign",
+        "redesigning": "Redesigning...",
+        "processing_page": "Processing Page {current} of {total}...",
+        "page": "Page",
+        "result": "Result",
+        "additional_prompt": "Additional Prompt",
+        "specific_instructions": "Specific instructions for this page...",
+        "suggested_prompts": "Suggested Prompts",
+        "show_suggestions": "Show prompt suggestions"
+    },
+    "errors": {
+        "failed_preview": "Failed to generate preview:",
+        "failed_generate": "Failed to generate design. Please check your API key and try again.",
+        "failed_zip": "Failed to zip images:",
+        "failed_create_zip": "Failed to create zip file."
+    },
+    "prompts": {
+        "comic": "Make it into a comical, manga style. Completely change the layout and objects like icons to something else.",
+        "minimalist": "Redesign this as a modern minimalist pitch deck with clean typography and ample whitespace.",
+        "dark_mode": "Convert this into a dark mode tech-style presentation with neon accents.",
+        "corporate": "Transform this into a professional corporate report style with a blue and white color scheme."
+    },
+    "ratios": {
+        "original": "Original",
+        "widescreen": "16:9 (Widescreen)",
+        "standard": "4:3 (Standard)",
+        "square": "1:1 (Square)",
+        "portrait": "9:16 (Portrait)"
+    }
+}

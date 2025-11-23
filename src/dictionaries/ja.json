@@ -1,0 +1,61 @@
+{
+    "common": {
+        "upload_pdf": "PDFをアップロード",
+        "design_settings": "デザイン設定",
+        "settings": "設定",
+        "company_overview": "会社概要",
+        "contact": "コンタクト",
+        "api_key": "APIキー",
+        "save": "保存",
+        "saved": "保存しました",
+        "saving": "保存中...",
+        "enter_api_key": "Gemini APIキーを入力してください",
+        "language": "言語",
+        "english": "英語",
+        "japanese": "日本語",
+        "prompt_placeholder": "例: モダンでミニマルなピッチデッキとして再デザインしてください...",
+        "rights_reserved": "© CORe, Inc. All rights reserved.",
+        "preview_customization": "プレビュー & カスタマイズ",
+        "generated_results": "生成結果",
+        "pages": "ページ",
+        "generated": "生成済み",
+        "download_all_zip": "すべてダウンロード (ZIP)",
+        "download_png": "PNGをダウンロード",
+        "view_full_screen": "全画面表示",
+        "drop_pdf": "PDFをここにドロップ",
+        "browse_pdf": "またはクリックして選択 (最大10MB)",
+        "upload_image": "画像をアップロード",
+        "upload_reference": "参照画像をアップロード",
+        "design_instructions": "デザイン指示",
+        "reference_image": "参照画像",
+        "aspect_ratio": "アスペクト比",
+        "generate_redesign": "リデザインを生成",
+        "redesigning": "リデザイン中...",
+        "processing_page": "{total}ページ中 {current}ページ目を処理中...",
+        "page": "ページ",
+        "result": "結果",
+        "additional_prompt": "追加プロンプト",
+        "specific_instructions": "このページへの具体的な指示...",
+        "suggested_prompts": "プロンプトの提案",
+        "show_suggestions": "プロンプトの提案を表示"
+    },
+    "errors": {
+        "failed_preview": "プレビューの生成に失敗しました:",
+        "failed_generate": "デザインの生成に失敗しました。APIキーを確認して再試行してください。",
+        "failed_zip": "画像の圧縮に失敗しました:",
+        "failed_create_zip": "ZIPファイルの作成に失敗しました。"
+    },
+    "prompts": {
+        "comic": "コミカルなマンガ風にしてください。レイアウトやアイコンなどのオブジェクトを全く別のものに変えてください。",
+        "minimalist": "クリーンなタイポグラフィと十分な余白を持つ、モダンでミニマリストなピッチデッキとしてリデザインしてください。",
+        "dark_mode": "ネオンのアクセントが入ったダークモードのテックスタイルなプレゼンテーションに変換してください。",
+        "corporate": "青と白の配色を使用した、プロフェッショナルな企業レポートスタイルに変形してください。"
+    },
+    "ratios": {
+        "original": "オリジナル",
+        "widescreen": "16:9 (ワイドスクリーン)",
+        "standard": "4:3 (標準)",
+        "square": "1:1 (正方形)",
+        "portrait": "9:16 (縦長)"
+    }
+}
