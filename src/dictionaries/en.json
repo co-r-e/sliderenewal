@@ -23,7 +23,7 @@
         "download_png": "Download PNG",
         "view_full_screen": "View Full Screen",
         "drop_pdf": "Drop your PDF here",
-        "browse_pdf": "or click to browse (max 10MB)",
+        "browse_pdf": "or click to browse (max 100MB)",
         "upload_image": "Upload Image",
         "upload_reference": "Upload Reference",
         "design_instructions": "Design Instructions",

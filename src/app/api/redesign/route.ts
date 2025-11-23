@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
         // Remove data:image/jpeg;base64, prefix from PDF page image
         const base64Image = image.split(",")[1];
 
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
+        const model = genAI.getGenerativeModel({ model: "gemini-3-pro-image-preview" });
 
         // Enhance prompt for higher quality and aspect ratio
         let enhancedPrompt = prompt;

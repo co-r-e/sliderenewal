@@ -33,7 +33,7 @@ export function ResultCard({ image, index, onDownload, onView, dict }: ResultCar
                 </div>
             </div>
 
-            <div className="relative flex-1 rounded-xl overflow-hidden border border-zinc-200 bg-white shadow-sm group">
+            <div className="relative flex-1 rounded-xl overflow-hidden border border-zinc-200 bg-white group">
                 <img
                     src={image}
                     alt={`${dict.common.generated} page ${index + 1}`}

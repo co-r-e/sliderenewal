@@ -91,7 +91,7 @@ export function Sidebar({
             <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6 scrollbar-thin scrollbar-thumb-zinc-200 scrollbar-track-transparent">
                 {/* Logo */}
                 <div className="flex justify-center pb-4">
-                    <img src="/logo.png" alt="Logo" className="h-8 w-auto" />
+                    <img src="/logo.png" alt="Logo" className="w-full h-auto" />
                 </div>
 
                 {/* Upload Section */}
@@ -139,7 +139,7 @@ export function Sidebar({
                                 className="fixed inset-0 z-40"
                                 onClick={() => setIsSettingsOpen(false)}
                             />
-                            <div className="absolute bottom-full left-0 w-full mb-2 p-2 bg-white rounded-xl shadow-xl border border-zinc-200 z-50 animate-in slide-in-from-bottom-2 fade-in duration-200">
+                            <div className="absolute bottom-full left-0 w-full mb-2 p-2 bg-white rounded-xl border border-zinc-200 z-50 animate-in slide-in-from-bottom-2 fade-in duration-200">
                                 <div className="space-y-1">
                                     <div className="p-3 space-y-3 border-b border-zinc-100 mb-2">
                                         <label className="text-xs font-medium text-zinc-500 uppercase tracking-wider">

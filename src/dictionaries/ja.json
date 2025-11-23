@@ -23,7 +23,7 @@
         "download_png": "PNGをダウンロード",
         "view_full_screen": "全画面表示",
         "drop_pdf": "PDFをここにドロップ",
-        "browse_pdf": "またはクリックして選択 (最大10MB)",
+        "browse_pdf": "またはクリックして選択 (最大100MB)",
         "upload_image": "画像をアップロード",
         "upload_reference": "参照画像をアップロード",
         "design_instructions": "デザイン指示",

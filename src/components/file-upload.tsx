@@ -90,7 +90,7 @@ export function FileUpload({ onFileSelect, selectedFile, onClear, dict }: FileUp
             ) : (
                 <div
                     key="file-selected"
-                    className="relative w-full p-6 rounded-3xl border border-zinc-200 bg-white shadow-sm overflow-hidden"
+                    className="relative w-full p-6 rounded-3xl border border-zinc-200 bg-white overflow-hidden"
                 >
                     <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent" />
                     <div className="relative flex items-center justify-between">

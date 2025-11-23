@@ -24,7 +24,7 @@ export function PdfPageCard({
     return (
         <div className="flex gap-6 items-start p-4 rounded-2xl bg-white/50 border border-zinc-100 hover:border-zinc-200 transition-colors">
             {/* Preview Image */}
-            <div className="relative w-1/3 rounded-xl overflow-hidden border border-zinc-200 bg-white shadow-sm shrink-0">
+            <div className="relative w-1/3 rounded-xl overflow-hidden border border-zinc-200 bg-white shrink-0">
                 <img
                     src={image}
                     alt={`Page ${index + 1}`}
@@ -48,7 +48,7 @@ export function PdfPageCard({
                         value={prompt}
                         onChange={(e) => onPromptChange(e.target.value)}
                         placeholder={dict.common.specific_instructions}
-                        className="w-full min-h-[80px] p-3 rounded-xl bg-white border border-zinc-200 text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 resize-none transition-all shadow-sm text-sm"
+                        className="w-full min-h-[80px] p-3 rounded-xl bg-white border border-zinc-200 text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 resize-none transition-all text-sm"
                     />
                 </div>
 
@@ -57,7 +57,7 @@ export function PdfPageCard({
                         {dict.common.reference_image}
                     </label>
                     {!referenceImage ? (
-                        <label className="flex items-center gap-3 p-2.5 rounded-xl bg-white border border-zinc-200 cursor-pointer hover:bg-zinc-50 transition-colors h-[42px] shadow-sm w-full group">
+                        <label className="flex items-center gap-3 p-2.5 rounded-xl bg-white border border-zinc-200 cursor-pointer hover:bg-zinc-50 transition-colors h-[42px] w-full group">
                             <div className="p-1.5 rounded-lg bg-zinc-50 text-zinc-400 group-hover:text-zinc-600 transition-colors">
                                 <ImageIcon className="w-3.5 h-3.5" />
                             </div>
@@ -76,7 +76,7 @@ export function PdfPageCard({
                             />
                         </label>
                     ) : (
-                        <div className="relative flex items-center gap-3 p-2.5 rounded-xl bg-white border border-primary/20 h-[42px] shadow-sm w-full">
+                        <div className="relative flex items-center gap-3 p-2.5 rounded-xl bg-white border border-primary/20 h-[42px] w-full">
                             <div className="relative w-8 h-8 rounded-lg overflow-hidden bg-zinc-100 shrink-0 border border-zinc-100">
                                 <img
                                     src={URL.createObjectURL(referenceImage)}

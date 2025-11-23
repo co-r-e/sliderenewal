@@ -83,7 +83,7 @@ export function DesignControls({
                         </button>
 
                         {isHintOpen && (
-                            <div className="absolute right-0 top-full mt-2 w-64 p-3 rounded-xl bg-white border border-zinc-200 shadow-xl z-50 animate-in fade-in zoom-in-95 duration-200">
+                            <div className="absolute right-0 top-full mt-2 w-64 p-3 rounded-xl bg-white border border-zinc-200 z-50 animate-in fade-in zoom-in-95 duration-200">
                                 <h4 className="text-xs font-semibold text-zinc-900 mb-2">{dict.common.suggested_prompts}</h4>
                                 <div className="space-y-2">
                                     {suggestedPrompts.map((suggestion, index) => (
@@ -109,7 +109,7 @@ export function DesignControls({
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
                         placeholder={dict.common.prompt_placeholder}
-                        className="w-full min-h-[100px] p-3 rounded-xl bg-white border border-zinc-200 text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 resize-none transition-all shadow-sm text-sm"
+                        className="w-full min-h-[100px] p-3 rounded-xl bg-white border border-zinc-200 text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 resize-none transition-all text-sm"
                         disabled={isGenerating}
                     />
                     <div className="absolute bottom-2 right-2">
@@ -126,7 +126,7 @@ export function DesignControls({
                         {dict.common.reference_image}
                     </label>
                     {!referenceImage ? (
-                        <label className="flex items-center gap-3 p-3 rounded-xl bg-white border border-zinc-200 cursor-pointer hover:bg-zinc-50 transition-colors h-[48px] shadow-sm">
+                        <label className="flex items-center gap-3 p-3 rounded-xl bg-white border border-zinc-200 cursor-pointer hover:bg-zinc-50 transition-colors h-[48px]">
                             <div className="p-1.5 rounded-lg bg-zinc-100 text-zinc-500">
                                 <ImageIcon className="w-4 h-4" />
                             </div>
@@ -142,7 +142,7 @@ export function DesignControls({
                             />
                         </label>
                     ) : (
-                        <div className="relative flex items-center gap-3 p-3 rounded-xl bg-white border border-primary/50 h-[48px] shadow-sm">
+                        <div className="relative flex items-center gap-3 p-3 rounded-xl bg-white border border-primary/50 h-[48px]">
                             <div className="relative w-8 h-8 rounded-lg overflow-hidden bg-zinc-100 shrink-0">
                                 <img
                                     src={URL.createObjectURL(referenceImage)}
@@ -175,7 +175,7 @@ export function DesignControls({
                             value={aspectRatio}
                             onChange={(e) => setAspectRatio(e.target.value)}
                             disabled={isGenerating}
-                            className="w-full appearance-none p-3 pl-10 rounded-xl bg-white border border-zinc-200 text-zinc-900 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all h-[48px] shadow-sm text-sm"
+                            className="w-full appearance-none p-3 pl-10 rounded-xl bg-white border border-zinc-200 text-zinc-900 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all h-[48px] text-sm"
                         >
                             {aspectRatios.map((ratio) => (
                                 <option key={ratio.id} value={ratio.id} className="bg-white text-zinc-900">
@@ -195,7 +195,7 @@ export function DesignControls({
                 disabled={disabled || !prompt.trim() || isGenerating}
                 className={`group relative w-full flex items-center justify-center gap-2 p-4 rounded-2xl font-semibold text-white transition-all duration-300 ${disabled || !prompt.trim() || isGenerating
                     ? "bg-zinc-800 text-zinc-500 cursor-not-allowed"
-                    : "bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5"
+                    : "bg-primary hover:bg-primary/90 hover:-translate-y-0.5"
                     }`}
             >
                 {isGenerating ? (
