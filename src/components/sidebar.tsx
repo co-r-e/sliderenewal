@@ -11,6 +11,7 @@ interface SidebarProps {
     setPrompt: (prompt: string) => void;
     isGenerating: boolean;
     onGenerate: () => void;
+    onStop: () => void;
     progress: { current: number; total: number } | null;
     referenceImage: File | null;
     setReferenceImage: (file: File | null) => void;
@@ -27,6 +28,7 @@ export function Sidebar({
     setPrompt,
     isGenerating,
     onGenerate,
+    onStop,
     progress,
     referenceImage,
     setReferenceImage,
@@ -91,7 +93,7 @@ export function Sidebar({
             <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6 scrollbar-thin scrollbar-thumb-zinc-200 scrollbar-track-transparent">
                 {/* Logo */}
                 <div className="flex justify-center pb-4">
-                    <img src="/logo.png" alt="Logo" className="w-full h-auto" />
+                    <img src="/logo.png" alt="Logo" className="w-4/5 h-auto" />
                 </div>
 
                 {/* Upload Section */}
@@ -111,6 +113,7 @@ export function Sidebar({
                     setPrompt={setPrompt}
                     isGenerating={isGenerating}
                     onGenerate={onGenerate}
+                    onStop={onStop}
                     disabled={!selectedFile}
                     progress={progress}
                     referenceImage={referenceImage}

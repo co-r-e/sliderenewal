@@ -1,4 +1,4 @@
-import { Sparkles, Image as ImageIcon, X, Ratio, HelpCircle } from "lucide-react";
+import { Sparkles, Image as ImageIcon, X, Ratio, HelpCircle, Square } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
 interface DesignControlsProps {
@@ -6,6 +6,7 @@ interface DesignControlsProps {
     setPrompt: (prompt: string) => void;
     isGenerating: boolean;
     onGenerate: () => void;
+    onStop: () => void;
     disabled: boolean;
     progress?: { current: number; total: number } | null;
     referenceImage: File | null;
@@ -20,6 +21,7 @@ export function DesignControls({
     setPrompt,
     isGenerating,
     onGenerate,
+    onStop,
     disabled,
     progress,
     referenceImage,
@@ -60,6 +62,7 @@ export function DesignControls({
     ];
 
     const suggestedPrompts = [
+        dict.prompts.rich_3d,
         dict.prompts.comic,
         dict.prompts.minimalist,
         dict.prompts.dark_mode,
@@ -190,30 +193,27 @@ export function DesignControls({
                 </div>
             </div>
 
-            <button
-                onClick={onGenerate}
-                disabled={disabled || !prompt.trim() || isGenerating}
-                className={`group relative w-full flex items-center justify-center gap-2 p-4 rounded-2xl font-semibold text-white transition-all duration-300 ${disabled || !prompt.trim() || isGenerating
-                    ? "bg-zinc-800 text-zinc-500 cursor-not-allowed"
-                    : "bg-primary hover:bg-primary/90 hover:-translate-y-0.5"
-                    }`}
-            >
-                {isGenerating ? (
-                    <>
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        <span>
-                            {progress
-                                ? dict.common.processing_page.replace("{current}", (progress.current + 1).toString()).replace("{total}", progress.total.toString())
-                                : dict.common.redesigning}
-                        </span>
-                    </>
-                ) : (
-                    <>
-                        <Sparkles className="w-5 h-5 transition-transform group-hover:scale-110" />
-                        <span>{dict.common.generate_redesign}</span>
-                    </>
-                )}
-            </button>
+            {isGenerating ? (
+                <button
+                    onClick={onStop}
+                    className="group relative w-full flex items-center justify-center gap-2 p-4 rounded-2xl font-semibold text-white transition-all duration-300 bg-red-500 hover:bg-red-600 hover:-translate-y-0.5"
+                >
+                    <Square className="w-5 h-5 fill-current" />
+                    <span>{dict.common.stop_generation}</span>
+                </button>
+            ) : (
+                <button
+                    onClick={onGenerate}
+                    disabled={disabled || !prompt.trim()}
+                    className={`group relative w-full flex items-center justify-center gap-2 p-4 rounded-2xl font-semibold text-white transition-all duration-300 ${disabled || !prompt.trim()
+                        ? "bg-zinc-800 text-zinc-500 cursor-not-allowed"
+                        : "bg-primary hover:bg-primary/90 hover:-translate-y-0.5"
+                        }`}
+                >
+                    <Sparkles className="w-5 h-5 transition-transform group-hover:scale-110" />
+                    <span>{dict.common.generate_redesign}</span>
+                </button>
+            )}
         </div>
     );
 }

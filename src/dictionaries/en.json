@@ -32,6 +32,7 @@
         "generate_redesign": "Generate Redesign",
         "redesigning": "Redesigning...",
         "processing_page": "Processing Page {current} of {total}...",
+        "stop_generation": "Stop",
         "page": "Page",
         "result": "Result",
         "additional_prompt": "Additional Prompt",
@@ -46,6 +47,7 @@
         "failed_create_zip": "Failed to create zip file."
     },
     "prompts": {
+        "rich_3d": "Transform this into a rich 3D design slide.",
         "comic": "Make it into a comical, manga style. Completely change the layout and objects like icons to something else.",
         "minimalist": "Redesign this as a modern minimalist pitch deck with clean typography and ample whitespace.",
         "dark_mode": "Convert this into a dark mode tech-style presentation with neon accents.",

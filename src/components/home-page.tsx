@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ComparisonView } from "@/components/comparison-view";
 import { Sidebar } from "@/components/sidebar";
 import { Package, X } from "lucide-react";
@@ -23,6 +23,9 @@ export default function HomePage({ dict }: { dict: any }) {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [isZipping, setIsZipping] = useState(false);
 
+    // Abort Controller for stopping generation
+    const abortControllerRef = useRef<AbortController | null>(null);
+
     // Handle file selection and generate preview
     useEffect(() => {
         const generatePreview = async () => {
@@ -42,8 +45,19 @@ export default function HomePage({ dict }: { dict: any }) {
         generatePreview();
     }, [file]);
 
+    const handleStop = () => {
+        if (abortControllerRef.current) {
+            abortControllerRef.current.abort();
+            abortControllerRef.current = null;
+        }
+    };
+
     const handleGenerate = async () => {
         if (!file || !prompt) return;
+
+        // Create new AbortController for this generation
+        abortControllerRef.current = new AbortController();
+        const signal = abortControllerRef.current.signal;
 
         setIsGenerating(true);
         setGeneratedImages([]);
@@ -73,6 +87,11 @@ export default function HomePage({ dict }: { dict: any }) {
             // 2. Process each page sequentially
             const results = [];
             for (let i = 0; i < images.length; i++) {
+                // Check if generation was stopped
+                if (signal.aborted) {
+                    break;
+                }
+
                 const image = images[i];
 
                 // Prepare prompt: Page Specific (Highest Priority) + Global + Consistency
@@ -125,6 +144,7 @@ export default function HomePage({ dict }: { dict: any }) {
                         referenceImages,
                         aspectRatio
                     }),
+                    signal,
                 });
 
                 if (!res.ok) throw new Error(`Failed to generate design for page ${i + 1}`);
@@ -141,11 +161,17 @@ export default function HomePage({ dict }: { dict: any }) {
                 setProgress({ current: i + 1, total: images.length });
             }
         } catch (error) {
-            console.error("Generation failed:", error);
-            alert(dict.errors.failed_generate);
+            // Don't show error if generation was stopped by user
+            if (error instanceof Error && error.name === "AbortError") {
+                console.log("Generation stopped by user");
+            } else {
+                console.error("Generation failed:", error);
+                alert(dict.errors.failed_generate);
+            }
         } finally {
             setIsGenerating(false);
             setProgress(null);
+            abortControllerRef.current = null;
         }
     };
 
@@ -200,6 +226,7 @@ export default function HomePage({ dict }: { dict: any }) {
                 setPrompt={setPrompt}
                 isGenerating={isGenerating}
                 onGenerate={handleGenerate}
+                onStop={handleStop}
                 progress={progress}
                 referenceImage={referenceImage}
                 setReferenceImage={setReferenceImage}
