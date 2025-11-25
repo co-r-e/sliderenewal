@@ -1,4 +1,6 @@
 import { ImageIcon, X } from "lucide-react";
+import type { Dictionary } from "@/types/dictionary";
+import { useObjectUrl } from "@/hooks/use-object-url";
 
 interface PdfPageCardProps {
     image: string;
@@ -8,7 +10,7 @@ interface PdfPageCardProps {
     referenceImage: File | null;
     onReferenceImageSelect: (file: File) => void;
     onReferenceImageRemove: () => void;
-    dict: any;
+    dict: Dictionary;
 }
 
 export function PdfPageCard({
@@ -21,6 +23,8 @@ export function PdfPageCard({
     onReferenceImageRemove,
     dict
 }: PdfPageCardProps) {
+    const referenceImageUrl = useObjectUrl(referenceImage);
+
     return (
         <div className="flex gap-6 items-start p-4 rounded-2xl bg-white/50 border border-zinc-100 hover:border-zinc-200 transition-colors">
             {/* Preview Image */}
@@ -78,11 +82,13 @@ export function PdfPageCard({
                     ) : (
                         <div className="relative flex items-center gap-3 p-2.5 rounded-xl bg-white border border-primary/20 h-[42px] w-full">
                             <div className="relative w-8 h-8 rounded-lg overflow-hidden bg-zinc-100 shrink-0 border border-zinc-100">
-                                <img
-                                    src={URL.createObjectURL(referenceImage)}
-                                    alt="Reference"
-                                    className="w-full h-full object-cover"
-                                />
+                                {referenceImageUrl && (
+                                    <img
+                                        src={referenceImageUrl}
+                                        alt="Reference"
+                                        className="w-full h-full object-cover"
+                                    />
+                                )}
                             </div>
                             <div className="flex-1 min-w-0">
                                 <div className="text-xs font-medium text-zinc-900 truncate">

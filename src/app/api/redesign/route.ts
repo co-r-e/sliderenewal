@@ -1,9 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI, Part } from "@google/generative-ai";
+
+interface RedesignRequestBody {
+    image: string;
+    prompt: string;
+    referenceImages?: string[];
+    aspectRatio?: string;
+}
 
 export async function POST(req: NextRequest) {
     try {
-        const { image, prompt, referenceImages, aspectRatio } = await req.json();
+        const body: RedesignRequestBody = await req.json();
+        const { image, prompt, referenceImages, aspectRatio } = body;
 
         if (!process.env.GEMINI_API_KEY) {
             return NextResponse.json(
@@ -26,15 +34,15 @@ export async function POST(req: NextRequest) {
 
         const model = genAI.getGenerativeModel({ model: "gemini-3-pro-image-preview" });
 
-        // Enhance prompt for higher quality and aspect ratio
-        let enhancedPrompt = prompt;
+        // Enhance prompt for higher quality (4K) and aspect ratio
+        let enhancedPrompt = `${prompt} Generate the output image in high resolution 4K quality (3840x2160 pixels or equivalent high resolution). Ensure sharp details, crisp text, and professional quality suitable for presentation.`;
 
         if (aspectRatio && aspectRatio !== "original") {
             enhancedPrompt += ` The output image MUST have an aspect ratio of ${aspectRatio}.`;
         }
 
-        const contentParts: any[] = [
-            enhancedPrompt,
+        const contentParts: Part[] = [
+            { text: enhancedPrompt },
             {
                 inlineData: {
                     data: base64Image,
@@ -44,18 +52,18 @@ export async function POST(req: NextRequest) {
         ];
 
         // Add reference images if provided
-        if (referenceImages && Array.isArray(referenceImages) && referenceImages.length > 0) {
+        if (referenceImages && referenceImages.length > 0) {
             referenceImages.forEach((refImg: string) => {
                 const base64Ref = refImg.split(",")[1];
                 contentParts.push({
                     inlineData: {
                         data: base64Ref,
-                        mimeType: "image/jpeg", // Assuming jpeg/png, API handles standard types
+                        mimeType: "image/jpeg",
                     }
                 });
             });
             // Add instruction to use references
-            contentParts[0] = `${enhancedPrompt} Refer to the style of the attached reference images.`;
+            contentParts[0] = { text: `${enhancedPrompt} Refer to the style of the attached reference images.` };
         }
 
         const result = await model.generateContent(contentParts);

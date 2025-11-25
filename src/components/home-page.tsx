@@ -6,13 +6,15 @@ import { Sidebar } from "@/components/sidebar";
 import { Package, X } from "lucide-react";
 import JSZip from "jszip";
 import { AnimatePresence, motion } from "framer-motion";
+import type { Dictionary } from "@/types/dictionary";
 
-export default function HomePage({ dict }: { dict: any }) {
+export default function HomePage({ dict }: { dict: Dictionary }) {
     const [file, setFile] = useState<File | null>(null);
     const [prompt, setPrompt] = useState("");
     const [isGenerating, setIsGenerating] = useState(false);
     const [generatedImages, setGeneratedImages] = useState<string[]>([]);
     const [previewImages, setPreviewImages] = useState<string[]>([]);
+    const [isLoadingPreview, setIsLoadingPreview] = useState(false);
     const [progress, setProgress] = useState<{ current: number; total: number } | null>(null);
     const [referenceImage, setReferenceImage] = useState<File | null>(null);
     const [aspectRatio, setAspectRatio] = useState("original");
@@ -30,15 +32,19 @@ export default function HomePage({ dict }: { dict: any }) {
     useEffect(() => {
         const generatePreview = async () => {
             if (file) {
+                setIsLoadingPreview(true);
                 try {
                     const images = await import("@/lib/pdf-converter").then(mod => mod.convertPdfToImages(file));
                     setPreviewImages(images);
                 } catch (error) {
                     console.error("Failed to generate preview:", error);
                     setPreviewImages([]);
+                } finally {
+                    setIsLoadingPreview(false);
                 }
             } else {
                 setPreviewImages([]);
+                setIsLoadingPreview(false);
             }
         };
 
@@ -108,7 +114,7 @@ export default function HomePage({ dict }: { dict: any }) {
 
                 // 3. Consistency Instruction
                 if (previousGeneratedImage) {
-                    finalPrompt += `\n\nMaintain consistent visual style, color scheme, and typography with the provided reference image (which is the previous page's design). IMPORTANT: Do NOT copy or reuse any text content from the previous page - only inherit the design tone and manner.`;
+                    finalPrompt += `\n\nRefer to the provided reference image (the previous page's design) and maintain consistent tone & manner: color scheme, object styles, and overall visual identity. However, DO NOT copy the layout or structure from the previous page. Instead, create the most optimal layout and visual expression tailored to THIS page's text content. Adapt the design to best communicate the specific information on this slide while preserving the cohesive look and feel.`;
                 }
 
                 // Prepare reference images: Global + Page Specific + Previous Generated Image
@@ -149,13 +155,14 @@ export default function HomePage({ dict }: { dict: any }) {
 
                 if (!res.ok) throw new Error(`Failed to generate design for page ${i + 1}`);
 
-                const data: any = await res.json();
+                const data = await res.json() as { result?: string };
                 if (data.result) {
-                    results.push(data.result);
-                    setGeneratedImages(prev => [...prev, data.result]);
+                    const resultImage = data.result;
+                    results.push(resultImage);
+                    setGeneratedImages(prev => [...prev, resultImage]);
 
                     // Update previous image for the next iteration
-                    previousGeneratedImage = data.result;
+                    previousGeneratedImage = resultImage;
                 }
 
                 setProgress({ current: i + 1, total: images.length });
@@ -227,7 +234,6 @@ export default function HomePage({ dict }: { dict: any }) {
                 isGenerating={isGenerating}
                 onGenerate={handleGenerate}
                 onStop={handleStop}
-                progress={progress}
                 referenceImage={referenceImage}
                 setReferenceImage={setReferenceImage}
                 aspectRatio={aspectRatio}
@@ -236,7 +242,7 @@ export default function HomePage({ dict }: { dict: any }) {
             />
 
             <main className="relative flex-1 flex flex-col ml-96 pb-20">
-                <div className="absolute inset-0 -z-10 h-full w-full bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
+                <div className="absolute inset-0 -z-10 h-full w-full bg-gray-50"></div>
 
                 <div className="container mx-auto px-8 mt-8 md:mt-12 max-w-[1600px] space-y-8">
                     {/* Header Actions */}
@@ -266,6 +272,9 @@ export default function HomePage({ dict }: { dict: any }) {
                         setPageReferenceImages={setPageReferenceImages}
                         onDownload={handleDownload}
                         onView={setSelectedImage}
+                        isGenerating={isGenerating}
+                        isLoadingPreview={isLoadingPreview}
+                        progress={progress}
                         dict={dict}
                     />
                 </div>

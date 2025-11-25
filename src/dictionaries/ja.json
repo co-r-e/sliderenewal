@@ -15,7 +15,7 @@
         "japanese": "日本語",
         "prompt_placeholder": "例: モダンでミニマルなピッチデッキとして再デザインしてください...",
         "rights_reserved": "© CORe, Inc. All rights reserved.",
-        "preview_customization": "プレビュー & カスタマイズ",
+        "preview_customization": "現行スライド & 追加指示",
         "generated_results": "生成結果",
         "pages": "ページ",
         "generated": "生成済み",
@@ -38,7 +38,9 @@
         "additional_prompt": "追加プロンプト",
         "specific_instructions": "このページへの具体的な指示...",
         "suggested_prompts": "プロンプトの提案",
-        "show_suggestions": "プロンプトの提案を表示"
+        "show_suggestions": "プロンプトの提案を表示",
+        "generating": "生成中...",
+        "loading_preview": "プレビューを読み込み中..."
     },
     "errors": {
         "failed_preview": "プレビューの生成に失敗しました:",
@@ -47,6 +49,7 @@
         "failed_create_zip": "ZIPファイルの作成に失敗しました。"
     },
     "prompts": {
+        "rich_design": "リッチデザインにアレンジしてください。",
         "rich_3d": "リッチな3Dデザインのスライドにしてください。",
         "comic": "コミカルなマンガ風にしてください。レイアウトやアイコンなどのオブジェクトを全く別のものに変えてください。",
         "minimalist": "クリーンなタイポグラフィと十分な余白を持つ、モダンでミニマリストなピッチデッキとしてリデザインしてください。",

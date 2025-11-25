@@ -1,5 +1,8 @@
 import { Sparkles, Image as ImageIcon, X, Ratio, HelpCircle, Square } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useCallback } from "react";
+import type { Dictionary } from "@/types/dictionary";
+import { useClickOutside } from "@/hooks/use-click-outside";
+import { useObjectUrl } from "@/hooks/use-object-url";
 
 interface DesignControlsProps {
     prompt: string;
@@ -8,12 +11,11 @@ interface DesignControlsProps {
     onGenerate: () => void;
     onStop: () => void;
     disabled: boolean;
-    progress?: { current: number; total: number } | null;
     referenceImage: File | null;
     setReferenceImage: (file: File | null) => void;
     aspectRatio: string;
     setAspectRatio: (ratio: string) => void;
-    dict: any;
+    dict: Dictionary;
 }
 
 export function DesignControls({
@@ -23,7 +25,6 @@ export function DesignControls({
     onGenerate,
     onStop,
     disabled,
-    progress,
     referenceImage,
     setReferenceImage,
     aspectRatio,
@@ -32,19 +33,9 @@ export function DesignControls({
 }: DesignControlsProps) {
     const [isHintOpen, setIsHintOpen] = useState(false);
     const hintRef = useRef<HTMLDivElement>(null);
+    const referenceImageUrl = useObjectUrl(referenceImage);
 
-    useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (hintRef.current && !hintRef.current.contains(event.target as Node)) {
-                setIsHintOpen(false);
-            }
-        }
-
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+    useClickOutside(hintRef, useCallback(() => setIsHintOpen(false), []));
 
     const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -62,6 +53,7 @@ export function DesignControls({
     ];
 
     const suggestedPrompts = [
+        dict.prompts.rich_design,
         dict.prompts.rich_3d,
         dict.prompts.comic,
         dict.prompts.minimalist,
@@ -70,8 +62,8 @@ export function DesignControls({
     ];
 
     return (
-        <div className="w-full space-y-4">
-            <div className="space-y-2">
+        <div className="w-full space-y-3">
+            <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
                     <label htmlFor="prompt" className="text-sm font-medium text-zinc-700 ml-1">
                         {dict.common.design_instructions}
@@ -123,8 +115,8 @@ export function DesignControls({
                 </div>
             </div>
 
-            <div className="space-y-4">
-                <div className="space-y-2">
+            <div className="space-y-3">
+                <div className="space-y-1.5">
                     <label className="text-sm font-medium text-zinc-700 ml-1">
                         {dict.common.reference_image}
                     </label>
@@ -147,11 +139,13 @@ export function DesignControls({
                     ) : (
                         <div className="relative flex items-center gap-3 p-3 rounded-xl bg-white border border-primary/50 h-[48px]">
                             <div className="relative w-8 h-8 rounded-lg overflow-hidden bg-zinc-100 shrink-0">
-                                <img
-                                    src={URL.createObjectURL(referenceImage)}
-                                    alt="Reference"
-                                    className="w-full h-full object-cover"
-                                />
+                                {referenceImageUrl && (
+                                    <img
+                                        src={referenceImageUrl}
+                                        alt="Reference"
+                                        className="w-full h-full object-cover"
+                                    />
+                                )}
                             </div>
                             <div className="flex-1 min-w-0">
                                 <div className="text-xs font-medium text-zinc-900 truncate">
@@ -169,7 +163,7 @@ export function DesignControls({
                     )}
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                     <label className="text-sm font-medium text-zinc-700 ml-1">
                         {dict.common.aspect_ratio}
                     </label>

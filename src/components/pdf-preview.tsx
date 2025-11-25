@@ -1,5 +1,5 @@
-
 import { PdfPageCard } from "./pdf-page-card";
+import type { Dictionary } from "@/types/dictionary";
 
 interface PdfPreviewProps {
     images: string[];
@@ -7,7 +7,7 @@ interface PdfPreviewProps {
     setPagePrompts: (prompts: Record<number, string>) => void;
     pageReferenceImages: Record<number, File | null>;
     setPageReferenceImages: (images: Record<number, File | null>) => void;
-    dict: any;
+    dict: Dictionary;
 }
 
 export function PdfPreview({

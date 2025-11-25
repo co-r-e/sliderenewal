@@ -1,5 +1,6 @@
 import { PdfPageCard } from "./pdf-page-card";
 import { ResultCard } from "./result-card";
+import type { Dictionary } from "@/types/dictionary";
 
 interface ComparisonViewProps {
     previewImages: string[];
@@ -10,7 +11,10 @@ interface ComparisonViewProps {
     setPageReferenceImages: (images: Record<number, File | null>) => void;
     onDownload: (imageUrl: string, index: number) => void;
     onView: (imageUrl: string) => void;
-    dict: any;
+    isGenerating: boolean;
+    isLoadingPreview: boolean;
+    progress: { current: number; total: number } | null;
+    dict: Dictionary;
 }
 
 export function ComparisonView({
@@ -22,8 +26,28 @@ export function ComparisonView({
     setPageReferenceImages,
     onDownload,
     onView,
+    isGenerating,
+    isLoadingPreview,
+    progress,
     dict
 }: ComparisonViewProps) {
+    // Show loading state when preview is being generated
+    if (isLoadingPreview) {
+        return (
+            <div className="flex items-center justify-center min-h-[400px]">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="relative">
+                        <div className="w-16 h-16 border-4 border-zinc-200 rounded-full"></div>
+                        <div className="absolute top-0 left-0 w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                    <div className="text-center">
+                        <p className="text-sm font-medium text-zinc-700">{dict.common.loading_preview || "Loading preview..."}</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     if (previewImages.length === 0) return null;
 
     const handlePromptChange = (index: number, value: string) => {
@@ -74,7 +98,7 @@ export function ComparisonView({
                             dict={dict}
                         />
 
-                        {/* Right: Result (if available) */}
+                        {/* Right: Result (if available) or Loading */}
                         {generatedImages[idx] ? (
                             <ResultCard
                                 image={generatedImages[idx]}
@@ -83,8 +107,21 @@ export function ComparisonView({
                                 onView={onView}
                                 dict={dict}
                             />
+                        ) : isGenerating && progress && idx === progress.current ? (
+                            <div className="hidden lg:flex border-2 border-dashed border-primary/30 rounded-2xl bg-primary/5 items-center justify-center min-h-[300px]">
+                                <div className="flex flex-col items-center gap-4">
+                                    <div className="relative">
+                                        <div className="w-16 h-16 border-4 border-primary/20 rounded-full"></div>
+                                        <div className="absolute top-0 left-0 w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                                    </div>
+                                    <div className="text-center">
+                                        <p className="text-sm font-medium text-zinc-700">{dict.common.generating || "Generating..."}</p>
+                                        <p className="text-xs text-zinc-500 mt-1">Page {idx + 1} / {progress.total}</p>
+                                    </div>
+                                </div>
+                            </div>
                         ) : (
-                            <div className="hidden lg:block border-2 border-dashed border-zinc-100 rounded-2xl bg-zinc-50/50" />
+                            <div className="hidden lg:block border-2 border-dashed border-zinc-100 rounded-2xl bg-zinc-50/50 min-h-[300px]" />
                         )}
                     </div>
                 ))}

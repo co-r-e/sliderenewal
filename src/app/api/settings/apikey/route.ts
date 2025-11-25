@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
+interface ApiKeyRequestBody {
+    apiKey: string;
+}
+
 const ENV_FILE_PATH = path.join(process.cwd(), ".env.local");
 
 export async function GET() {
@@ -24,7 +28,8 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
     try {
-        const { apiKey } = await req.json();
+        const body: ApiKeyRequestBody = await req.json();
+        const { apiKey } = body;
 
         let envContent = "";
         if (fs.existsSync(ENV_FILE_PATH)) {

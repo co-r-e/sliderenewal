@@ -15,7 +15,7 @@
         "japanese": "Japanese",
         "prompt_placeholder": "e.g., Redesign this as a modern minimalist pitch deck...",
         "rights_reserved": "© CORe, Inc. All rights reserved.",
-        "preview_customization": "Preview & Customization",
+        "preview_customization": "Current Slides & Additional Instructions",
         "generated_results": "Generated Results",
         "pages": "pages",
         "generated": "generated",
@@ -38,7 +38,9 @@
         "additional_prompt": "Additional Prompt",
         "specific_instructions": "Specific instructions for this page...",
         "suggested_prompts": "Suggested Prompts",
-        "show_suggestions": "Show prompt suggestions"
+        "show_suggestions": "Show prompt suggestions",
+        "generating": "Generating...",
+        "loading_preview": "Loading preview..."
     },
     "errors": {
         "failed_preview": "Failed to generate preview:",
@@ -47,6 +49,7 @@
         "failed_create_zip": "Failed to create zip file."
     },
     "prompts": {
+        "rich_design": "Arrange this into a rich design.",
         "rich_3d": "Transform this into a rich 3D design slide.",
         "comic": "Make it into a comical, manga style. Completely change the layout and objects like icons to something else.",
         "minimalist": "Redesign this as a modern minimalist pitch deck with clean typography and ample whitespace.",

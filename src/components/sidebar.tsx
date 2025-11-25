@@ -1,7 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Settings } from "lucide-react";
 import { FileUpload } from "@/components/file-upload";
 import { DesignControls } from "@/components/design-controls";
+import type { Dictionary } from "@/types/dictionary";
 
 interface SidebarProps {
     selectedFile: File | null;
@@ -12,12 +14,11 @@ interface SidebarProps {
     isGenerating: boolean;
     onGenerate: () => void;
     onStop: () => void;
-    progress: { current: number; total: number } | null;
     referenceImage: File | null;
     setReferenceImage: (file: File | null) => void;
     aspectRatio: string;
     setAspectRatio: (ratio: string) => void;
-    dict: any;
+    dict: Dictionary;
 }
 
 export function Sidebar({
@@ -29,28 +30,15 @@ export function Sidebar({
     isGenerating,
     onGenerate,
     onStop,
-    progress,
     referenceImage,
     setReferenceImage,
     aspectRatio,
     setAspectRatio,
     dict
 }: SidebarProps) {
+    const pathname = usePathname();
+    const isJapanese = pathname.startsWith("/ja");
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-    const settingsRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (settingsRef.current && !settingsRef.current.contains(event.target as Node)) {
-                setIsSettingsOpen(false);
-            }
-        }
-
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
 
     // API Key Management
     const [apiKey, setApiKey] = useState("");
@@ -88,16 +76,16 @@ export function Sidebar({
     };
 
     return (
-        <aside className="fixed inset-y-0 left-0 z-50 flex w-96 flex-col bg-white/95 border-r border-zinc-200 text-zinc-900 backdrop-blur-sm overflow-hidden">
+        <aside className="fixed inset-y-0 left-0 z-50 flex w-96 flex-col bg-white/95 text-zinc-900 backdrop-blur-sm overflow-hidden">
             {/* Scrollable Content */}
-            <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6 scrollbar-thin scrollbar-thumb-zinc-200 scrollbar-track-transparent">
+            <div className="flex-1 overflow-y-auto px-6 py-5 space-y-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 {/* Logo */}
-                <div className="flex justify-center pb-4">
+                <div className="flex justify-center pb-2">
                     <img src="/logo.png" alt="Logo" className="w-4/5 h-auto" />
                 </div>
 
                 {/* Upload Section */}
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                     <div className="text-xs font-medium text-zinc-500 uppercase tracking-wider">{dict.common.upload_pdf}</div>
                     <FileUpload
                         onFileSelect={onFileSelect}
@@ -115,17 +103,32 @@ export function Sidebar({
                     onGenerate={onGenerate}
                     onStop={onStop}
                     disabled={!selectedFile}
-                    progress={progress}
                     referenceImage={referenceImage}
                     setReferenceImage={setReferenceImage}
                     aspectRatio={aspectRatio}
                     setAspectRatio={setAspectRatio}
                     dict={dict}
                 />
+
+                {/* Iruka Dark Link Card */}
+                <a
+                    href={isJapanese ? "https://irukadark.com/ja" : "https://irukadark.com/"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block mt-4 rounded-xl border border-zinc-200 overflow-hidden hover:border-zinc-300 hover:shadow-md transition-all group"
+                >
+                    <div className="aspect-[16/9] bg-zinc-100 flex items-center justify-center">
+                        <img
+                            src={isJapanese ? "/irukadark_thunbnail_ja.png" : "/irukadark_thunbnail.png"}
+                            alt="Iruka Dark"
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                </a>
             </div>
 
             {/* Footer Settings */}
-            <div className="p-4 border-t border-zinc-200 bg-white/50">
+            <div className="p-4 bg-white/50">
                 <div className="relative">
                     <button
                         onClick={() => setIsSettingsOpen(!isSettingsOpen)}
@@ -151,10 +154,10 @@ export function Sidebar({
                                         <div className="flex gap-2">
                                             <button
                                                 onClick={() => {
-                                                    const newPath = window.location.pathname.replace(/^\/ja/, "") || "/";
+                                                    const newPath = pathname.replace(/^\/ja/, "") || "/";
                                                     window.location.href = newPath;
                                                 }}
-                                                className={`flex-1 px-3 py-2 text-xs font-medium rounded-lg transition-colors ${!window.location.pathname.startsWith("/ja")
+                                                className={`flex-1 px-3 py-2 text-xs font-medium rounded-lg transition-colors ${!isJapanese
                                                     ? "bg-zinc-900 text-white"
                                                     : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
                                                     }`}
@@ -163,12 +166,12 @@ export function Sidebar({
                                             </button>
                                             <button
                                                 onClick={() => {
-                                                    if (!window.location.pathname.startsWith("/ja")) {
-                                                        const newPath = `/ja${window.location.pathname === "/" ? "" : window.location.pathname}`;
+                                                    if (!isJapanese) {
+                                                        const newPath = `/ja${pathname === "/" ? "" : pathname}`;
                                                         window.location.href = newPath;
                                                     }
                                                 }}
-                                                className={`flex-1 px-3 py-2 text-xs font-medium rounded-lg transition-colors ${window.location.pathname.startsWith("/ja")
+                                                className={`flex-1 px-3 py-2 text-xs font-medium rounded-lg transition-colors ${isJapanese
                                                     ? "bg-zinc-900 text-white"
                                                     : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
                                                     }`}

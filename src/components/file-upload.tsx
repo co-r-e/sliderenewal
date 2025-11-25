@@ -2,12 +2,13 @@
 
 import { useState, useCallback } from "react";
 import { Upload, FileText, X } from "lucide-react";
+import type { Dictionary } from "@/types/dictionary";
 
 interface FileUploadProps {
     onFileSelect: (file: File) => void;
     selectedFile: File | null;
     onClear: () => void;
-    dict: any;
+    dict: Dictionary;
 }
 
 export function FileUpload({ onFileSelect, selectedFile, onClear, dict }: FileUploadProps) {
@@ -72,9 +73,6 @@ export function FileUpload({ onFileSelect, selectedFile, onClear, dict }: FileUp
                                 </p>
                                 <p className="text-xs text-zinc-500 mt-0.5">
                                     {dict.common.browse_pdf}
-                                </p>
-                                <p className="text-[10px] text-zinc-400 mt-0.5">
-                                    {dict.common.max_file_size}
                                 </p>
                             </div>
                         </div>

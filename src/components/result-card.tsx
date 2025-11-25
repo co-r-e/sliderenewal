@@ -1,11 +1,12 @@
 import { Download, Maximize2 } from "lucide-react";
+import type { Dictionary } from "@/types/dictionary";
 
 interface ResultCardProps {
     image: string;
     index: number;
     onDownload: (imageUrl: string, index: number) => void;
     onView: (imageUrl: string) => void;
-    dict: any;
+    dict: Dictionary;
 }
 
 export function ResultCard({ image, index, onDownload, onView, dict }: ResultCardProps) {
