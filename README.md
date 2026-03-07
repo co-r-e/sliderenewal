@@ -25,7 +25,13 @@ npm install
 
 ### 3. Set up environment variables
 
-Create a `.env.local` file in the root directory:
+Copy the example file and set your API key:
+
+```bash
+cp env.example .env.local
+```
+
+Then edit `.env.local`:
 
 ```bash
 GEMINI_API_KEY=your_api_key_here
@@ -42,3 +48,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Public Release Checklist
+
+- Keep `LICENSE` in the repository and in any redistributed source copies.
+- Never commit `.env.local` or real API keys. Start from `env.example`.
+- Run `npm run release:check` before creating a public release.
+- Apply branch protection for `main` before opening external collaboration. A ready-to-run helper script and setup notes are available in [`docs/RELEASING.md`](docs/RELEASING.md).

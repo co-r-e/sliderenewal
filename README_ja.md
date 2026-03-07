@@ -25,7 +25,13 @@ npm install
 
 ### 3. 環境変数の設定
 
-ルートディレクトリに `.env.local` ファイルを作成：
+サンプルファイルをコピーしてから API キーを設定します：
+
+```bash
+cp env.example .env.local
+```
+
+その後 `.env.local` を編集：
 
 ```bash
 GEMINI_API_KEY=your_api_key_here
@@ -42,3 +48,10 @@ npm run dev
 ## ライセンス
 
 このプロジェクトは MIT ライセンスの下で公開されています。詳細は [LICENSE](LICENSE) ファイルを参照してください。
+
+## 公開前チェックリスト
+
+- `LICENSE` をリポジトリと配布ソースに必ず含める
+- `.env.local` や実際の API キーはコミットしない。`env.example` から作成する
+- 公開リリース前に `npm run release:check` を実行する
+- 外部コラボレーションを始める前に `main` の保護設定を入れる。実行用スクリプトと手順は [`docs/RELEASING.md`](docs/RELEASING.md) を参照
